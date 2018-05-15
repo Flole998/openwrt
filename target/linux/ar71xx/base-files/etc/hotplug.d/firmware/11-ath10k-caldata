@@ -145,6 +145,11 @@ case "$FIRMWARE" in
 		ath10kcal_extract "art" 20480 2116
 		ath10kcal_patch_mac $(macaddr_add $(cat /sys/class/net/eth1/address) -2)
 		;;
+	enh1750ext|\
+	ews860ap)
+		ath10kcal_extract "ART" 20480 2116
+		ath10kcal_patch_mac $(macaddr_add $(cat /sys/class/net/eth0/address) +3)
+		;;
 	nbg6616|\
 	nbg6716)
 		ath10kcal_extract "RFdata" 20480 2116

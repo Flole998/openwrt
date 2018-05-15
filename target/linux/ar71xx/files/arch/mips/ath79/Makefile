@@ -124,6 +124,7 @@ obj-$(CONFIG_ATH79_MACH_EL_MINI)		+= mach-el-mini.o
 obj-$(CONFIG_ATH79_MACH_ENS202EXT)		+= mach-ens202ext.o
 obj-$(CONFIG_ATH79_MACH_EPG5000)		+= mach-epg5000.o
 obj-$(CONFIG_ATH79_MACH_ESR1750)		+= mach-esr1750.o
+obj-$(CONFIG_ATH79_MACH_EWS860AP)		+= mach-ews860ap.o
 obj-$(CONFIG_ATH79_MACH_ESR900)			+= mach-esr900.o
 obj-$(CONFIG_ATH79_MACH_EW_BALIN)		+= mach-ew-balin.o
 obj-$(CONFIG_ATH79_MACH_EW_DORIN)		+= mach-ew-dorin.o

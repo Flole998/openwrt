@@ -117,9 +117,11 @@ enum ath79_mach_type {
 	ATH79_MACH_EBR_2310_C1,			/* D-link EBR-2310 rev. C1 */
 	ATH79_MACH_EL_M150,			/* EasyLink EL-M150 */
 	ATH79_MACH_EL_MINI,			/* EasyLink EL-MINI */
+	ATH79_MACH_ENH1750EXT,			/* EnGenius ENH1750EXT */
 	ATH79_MACH_ENS202EXT,			/* EnGenius ENS202EXT */
 	ATH79_MACH_EPG5000,			/* EnGenius EPG5000 */
 	ATH79_MACH_ESR1750,			/* EnGenius ESR1750 */
+	ATH79_MACH_EWS860AP,			/* EnGenius EWS860AP */
 	ATH79_MACH_ESR900,			/* EnGenius ESR900 */
 	ATH79_MACH_EW_BALIN,			/* embedded wireless Balin Platform */
 	ATH79_MACH_EW_DORIN,			/* embedded wireless Dorin Platform */

@@ -391,6 +391,11 @@ e558-v2|\
 e750g-v8)
 	ucidef_set_led_wlan "wlan" "WLAN" "$board:green:wlan" "phy0tpt"
 	;;
+enh1750ext|\
+ews860ap)
+	ucidef_set_led_wlan "wlan2g" "WLAN 2.4 GHz" "$board:green:wlan-2g" "phy1tpt"
+	ucidef_set_led_wlan "wlan5g" "WLAN 5 GHz" "$board:green:wlan-5g" "phy0tpt"
+	;;
 esr900)
 	ucidef_set_led_wlan "wlan2g" "WLAN 2.4 GHz" "engenius:blue:wlan-2g" "phy0tpt"
 	ucidef_set_led_wlan "wlan5g" "WLAN 5 GHz" "engenius:blue:wlan-5g" "phy1tpt"
@@ -399,6 +404,10 @@ esr1750|\
 epg5000)
 	ucidef_set_led_wlan "wlan2g" "WLAN 2.4 GHz" "$board:blue:wlan-2g" "phy1tpt"
 	ucidef_set_led_wlan "wlan5g" "WLAN 5 GHz" "$board:blue:wlan-5g" "phy0tpt"
+	;;
+ews860ap)
+	ucidef_set_led_wlan "wlan2g" "WLAN 2.4 GHz" "$board:green:wlan-2g" "phy1tpt"
+	ucidef_set_led_wlan "wlan5g" "WLAN 5 GHz" "$board:green:wlan-5g" "phy0tpt"
 	;;
 fritz4020)
 	ucidef_set_led_netdev "lan" "LAN" "$board:green:lan" "eth1"
