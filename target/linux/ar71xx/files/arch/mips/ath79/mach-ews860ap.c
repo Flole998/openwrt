@@ -77,7 +77,7 @@ static void __init ews860ap_setup(void)
 
 	ath79_register_mdio(0, 0x0);
 
-	ath79_register_wmac(art + EWS860AP_WMAC_CALDATA_OFFSET, NULL);
+	ath79_register_wmac(art + EWS860AP_WMAC_CALDATA_OFFSET, art);
 
 	ath79_setup_qca955x_eth_cfg(QCA955X_ETH_CFG_RGMII_EN);
 
