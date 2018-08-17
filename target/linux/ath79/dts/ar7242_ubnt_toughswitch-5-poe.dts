@@ -1,0 +1,160 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+/dts-v1/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+
+#include "ar7242.dtsi"
+
+/ {
+	compatible = "ubnt,toughswitch-5-poe", "qca,ar7242";
+	model = "Ubiquiti Networks Toughswitch 5 POE";
+
+	memory@0 {
+		device_type = "memory";
+		reg = <0x0 0x4000000>;
+	};
+
+	extosc: ref {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <40000000>;
+	};
+
+	keys {
+		compatible = "gpio-keys-polled";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		poll-interval = <100>;
+
+		button@0 {
+			label = "reset";
+			linux,code = <KEY_RESTART>;
+			gpios = <&gpio 12 GPIO_ACTIVE_LOW>;
+		};
+	};
+};
+
+&pll {
+	clocks = <&extosc>;
+};
+
+&spi {
+	status = "okay";
+	//num-cs = <1>;
+	num-cs = <2>;
+	cs-gpios = <0>, <&gpio 0 0>;
+
+	flash@0 {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "jedec,spi-nor";
+		reg = <0>;
+		spi-max-frequency = <25000000>;
+
+		partitions {
+			compatible = "fixed-partitions";
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			partition@0 {
+				reg = <0x0 0x40000>;
+				label = "u-boot";
+				read-only;
+			};
+
+			partition@40000 {
+				reg = <0x40000 0x10000>;
+				label = "u-boot-env";
+				read-only;
+			};
+
+			partition@50000 {
+				reg = <0x50000 0x760000>;
+				label = "firmware";
+			};
+
+			partition@7b0000 {
+				reg = <0x7b0000 0x40000>;
+				label = "cfg";
+				read-only;
+			};
+
+			eeprom: partition@7f0000 {
+				reg = <0x7f0000 0x10000>;
+				label = "EEPROM";
+				read-only;
+			};
+		};
+	};
+
+	ssr: ssr@0 {
+		compatible = "fairchild,74hc595";
+		reg = <1>;
+		gpio-controller;
+		#gpio-cells = <2>;
+		registers-number = <2>;
+		spi-max-frequency = <100000>;
+	};
+};
+
+&uart {
+	status = "okay";
+};
+
+&usb_phy {
+	status = "okay";
+};
+
+&usb {
+	status = "okay";
+};
+
+&mdio0 {
+	status = "okay";
+
+	phy-mask = <18>;
+	phy0: ethernet-phy@0 {
+		reg = <0>;
+		phy-mode = "rgmii";
+
+		qca,ar8327-initvals = <
+			0x0004 0x7600000 /* PAD0_MODE */
+			0x0008 0x0000000 /* PAD5_MODE */
+			0x000c 0x7600000 /* PAD6_MODE */
+			0x0010 0x40000000 /* POWER_ON_STRIP */
+			0x0050 0xcc35cc35 /* LED_CTRL0 */
+			0x0054 0xca35ca35 /* LED_CTRL1 */
+			0x0058 0xc935c935 /* LED_CTRL2 */
+			0x005c 0x3ffff00 /* LED_CTRL3 */
+			0x007c 0x000007e /* PORT0_STATUS */
+			0x0094 0x000007e /* PORT6_STATUS */
+		>;
+	};
+
+	phy18: ethernet-phy@18 {
+		reg = <18>;
+		phy-mode = "mii";
+	};
+};
+
+&eth0 {
+	status = "okay";
+
+	phy-mode = "rgmii";
+	phy-handle = <&phy0>;
+	mtd-mac-address = <&eeprom 0x0>;
+};
+
+&eth1 {
+	status = "okay";
+
+	mtd-mac-address = <&eeprom 0x6>;
+	phy-mode = "mii";
+	phy-handle = <&phy18>;
+	
+	/*fixed-link {
+		speed = <100>;
+		full-duplex;
+	};*/
+};

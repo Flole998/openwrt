@@ -193,6 +193,7 @@ ath79_setup_interfaces()
 		ucidef_add_switch "switch0" \
 			"1:lan" "2:lan" "3:lan" "4:lan" "0:wan" "9@eth0"
 		;;
+	
 	tplink,tl-wr740n-v1|\
 	tplink,tl-wr740n-v3|\
 	tplink,tl-wr741-v1|\
@@ -229,6 +230,10 @@ ath79_setup_interfaces()
 	ubnt,unifiac-pro)
 		ucidef_add_switch "switch0" \
 			"0@eth0" "2:lan" "3:wan"
+		;;
+	ubnt,toughswitch-5-poe)
+		ucidef_add_switch "switch0" \
+			"0@eth0" "1:lan" "2:lan" "3:lan" "4:lan" "5:wan"
 		;;
 	xiaomi,mi-router-4q)
 		ucidef_set_interface_wan "eth0"
