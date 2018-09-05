@@ -13,7 +13,7 @@ board=$(board_name)
 
 case "$board" in
 8dev,jalapeno |\
-cilab,meshpoint)
+cilab,meshpoint-one)
 	ucidef_set_interfaces_lan_wan "eth0" "eth1"
 	;;
 asus,rt-ac58u)
