@@ -47,7 +47,7 @@ zyxel_do_upgrade() {
 platform_do_upgrade() {
 	case "$(board_name)" in
 	8dev,jalapeno |\
-	cilab,meshpoint)
+	cilab,meshpoint-one)
 		nand_do_upgrade "$ARGV"
 		;;
 	asus,rt-ac58u)

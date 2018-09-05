@@ -21,8 +21,8 @@
 #include <dt-bindings/soc/qcom,tcsr.h>
 
 / {
-	model = "Crisis Innovation Lab Meshpoint";
-	compatible = "cilab,meshpoint", "qcom,ipq4019";
+	model = "Crisis Innovation Lab Meshpoint One";
+	compatible = "cilab,meshpoint-one", "qcom,ipq4019";
 
 	soc {
 		mdio@90000 {
