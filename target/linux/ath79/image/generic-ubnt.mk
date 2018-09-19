@@ -230,7 +230,7 @@ TARGET_DEVICES += ubnt_routerstation-pro
 
 define Device/ubnt_toughswitch-5-poe
   $(Device/ubnt-sw)
-  DEVICE_TITLE := Ubiquiti Networks Toughswitch 5 POE
+  DEVICE_TITLE := Ubiquiti Toughswitch 5 POE
   DEVICE_PACKAGES := -wpad-mini -kmod-ath9k
   SUPPORTED_DEVICES += ubnt,toughswitch-5-poe toughswitch-5-poe
 endef
