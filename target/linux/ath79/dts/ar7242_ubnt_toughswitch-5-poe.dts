@@ -8,7 +8,7 @@
 
 / {
 	compatible = "ubnt,toughswitch-5-poe", "qca,ar7242";
-	model = "Ubiquiti Networks Toughswitch 5 POE";
+	model = "Ubiquiti Toughswitch 5 POE";
 
 	memory@0 {
 		device_type = "memory";
