@@ -41,9 +41,8 @@
 
 &spi {
 	status = "okay";
-	//num-cs = <1>;
 	num-cs = <2>;
-	cs-gpios = <0>, <&gpio 0 0>;
+	cs-gpios = <0>, <&gpio 0 GPIO_ACTIVE_HIGH>;
 
 	flash@0 {
 		#address-cells = <1>;
@@ -113,7 +112,6 @@
 &mdio0 {
 	status = "okay";
 
-	phy-mask = <18>;
 	phy0: ethernet-phy@0 {
 		reg = <0>;
 		phy-mode = "rgmii";
@@ -131,11 +129,6 @@
 			0x0094 0x000007e /* PORT6_STATUS */
 		>;
 	};
-
-	phy18: ethernet-phy@18 {
-		reg = <18>;
-		phy-mode = "mii";
-	};
 };
 
 &eth0 {
@@ -151,10 +144,4 @@
 
 	mtd-mac-address = <&eeprom 0x6>;
 	phy-mode = "mii";
-	phy-handle = <&phy18>;
-	
-	/*fixed-link {
-		speed = <100>;
-		full-duplex;
-	};*/
 };
