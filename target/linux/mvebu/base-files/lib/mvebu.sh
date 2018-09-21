@@ -32,6 +32,9 @@ mvebu_board_detect() {
 	*"Marvell Armada 7040 DB board")
 		name="marvell,armada7040-db"
 		;;
+	*"SolidRun ClearFog GT 8K")
+		name="solidrun,clearfog-gt-8k"
+		;;
 	*"Globalscale Mirabox")
 		name="mirabox"
 		;;
