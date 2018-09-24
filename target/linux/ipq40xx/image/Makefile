@@ -97,7 +97,7 @@ define Device/cilab_meshpoint-one
 	DEVICE_DTS := qcom-ipq4018-meshpoint-one
 	BLOCKSIZE := 128k
 	PAGESIZE := 2048
-	DEVICE_TITLE := Crisis Innovation Lab Meshpoint One
+	DEVICE_TITLE := Crisis Innovation Lab MeshPoint One
 	DEVICE_PACKAGES := kmod-i2c-gpio kmod-iio-bmp280-i2c kmod-hwmon-core kmod-hwmon-ina2xx kmod-rtc-pcf2127
 endef
 TARGET_DEVICES += cilab_meshpoint-one
