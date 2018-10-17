@@ -96,7 +96,7 @@
 		edma@c080000 {
 			status = "okay";
 		};
-		
+
 		i2c-gpio {
 			compatible = "i2c-gpio";
 			gpios = <&tlmm 0 GPIO_ACTIVE_HIGH /* sda */
@@ -104,7 +104,7 @@
 		        	 >;
 			#address-cells = <1>;
 			#size-cells = <0>;
-			
+
 			status = "okay";
 
 			bme280@76 {
