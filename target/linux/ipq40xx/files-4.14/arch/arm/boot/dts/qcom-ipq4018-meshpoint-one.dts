@@ -146,7 +146,7 @@
 
 		gpio_poe_out {
 			gpio-export,name = "meshpoint:poe:out";
-			gpio-export,output = <0>;
+			gpio-export,output = <1>;
 			gpios = <&tlmm 1 GPIO_ACTIVE_LOW>;
 		};
 	};
