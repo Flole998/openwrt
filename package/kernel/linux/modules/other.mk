@@ -726,6 +726,45 @@ endef
 $(eval $(call KernelPackage,serial-8250-exar))
 
 
+define KernelPackage/serial-sc16is7xx-i2c
+  SUBMENU:=$(OTHER_MENU)
+  TITLE:=SC16IS7xx serial support (I2C)
+  DEPENDS:=+kmod-i2c-core
+  KCONFIG:= CONFIG_SERIAL_SC16IS7XX \
+    CONFIG_SERIAL_SC16IS7XX_I2C=y \
+  CONFIG_SERIAL_SC16IS7XX_SPI=n
+  FILES:=$(LINUX_DIR)/drivers/tty/serial/sc16is7xx.ko
+  AUTOLOAD:=$(call AutoProbe,serial-sc16is7xx-i2c)
+endef
+
+define KernelPackage/serial-serial-sc16is7xx-i2c/description
+ This driver supports SC16IS7xx serial ports on I2C bus.
+ Supported ICs are SC16IS740, SC16IS741, SC16IS750, SC16IS752,
+ SC16IS760 and SC16IS762.
+endef
+
+$(eval $(call KernelPackage,serial-sc16is7xx-i2c))
+
+
+define KernelPackage/serial-sc16is7xx-spi
+  SUBMENU:=$(OTHER_MENU)
+  TITLE:=SC16IS7xx serial support (SPI)
+  DEPENDS:=+kmod-spi-bitbang
+  KCONFIG:= CONFIG_SERIAL_SC16IS7XX \
+    CONFIG_SERIAL_SC16IS7XX_I2C=n \
+  CONFIG_SERIAL_SC16IS7XX_SPI=y
+  FILES:=$(LINUX_DIR)/drivers/tty/serial/sc16is7xx.ko
+  AUTOLOAD:=$(call AutoProbe,serial-sc16is7xx-spi)
+endef
+define KernelPackage/serial-sc16is7xx-spi/description
+ This driver supports SC16IS7xx serial ports on SPI bus.
+ Supported ICs are SC16IS740, SC16IS741, SC16IS750, SC16IS752,
+ SC16IS760 and SC16IS762.
+endef
+
+$(eval $(call KernelPackage,serial-sc16is7xx-spi))
+
+
 define KernelPackage/regmap
   SUBMENU:=$(OTHER_MENU)
   TITLE:=Generic register map support
