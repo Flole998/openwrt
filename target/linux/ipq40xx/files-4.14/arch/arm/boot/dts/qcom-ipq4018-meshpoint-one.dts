@@ -152,6 +152,7 @@
 				reg = <0x27>;
 				gpio-controller;
 				#gpio-cells = <2>;
+				gpio-line-names = "charge", "full", "power-good", "power-on";
 			};
 		};
 	};
