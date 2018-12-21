@@ -18,6 +18,7 @@ ipq40xx_setup_interfaces()
 		ucidef_set_interfaces_lan_wan "eth0" "eth1"
 		;;
 	asus,map-ac2200|\
+	cilab,meshpoint-one|\
 	openmesh,a42|\
 	openmesh,a62)
 		ucidef_set_interfaces_lan_wan "eth1" "eth0"
