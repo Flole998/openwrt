@@ -24,15 +24,19 @@
 	model = "Crisis Innovation Lab MeshPoint One";
 	compatible = "cilab,meshpoint-one", "qcom,ipq4019";
 
-	clocks {
+	/*clocks {
 			sc16is750_clock: sc16is750_clock {
 				compatible = "fixed-clock";
 				clock-frequency = <14745600>;
 				#clock-cells = <0>;
 			};
-	};
+	};*/
 
 	soc {
+		rng@22000 {
+			status = "okay";
+		};
+
 		mdio@90000 {
 			status = "okay";
 			pinctrl-0 = <&mdio_pins>;
@@ -137,7 +141,7 @@
 				shunt-resistor = <2000>;
 			};
 
-			sc16is750@48 {
+			/*sc16is750@48 {
 				compatible = "nxp,sc16is750";
 				reg = <0x48>;
 				clocks = <&sc16is750_clock>;
@@ -153,7 +157,7 @@
 				gpio-controller;
 				#gpio-cells = <2>;
 				gpio-line-names = "charge", "full", "power-good", "power-on";
-			};
+			};*/
 		};
 	};
 
