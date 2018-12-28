@@ -24,14 +24,6 @@
 	model = "Crisis Innovation Lab MeshPoint One";
 	compatible = "cilab,meshpoint-one", "qcom,ipq4019";
 
-	clocks {
-			sc16is750_clock: sc16is750_clock {
-				compatible = "fixed-clock";
-				clock-frequency = <14745600>;
-				#clock-cells = <0>;
-			};
-	};
-
 	soc {
 		rng@22000 {
 			status = "okay";
@@ -122,33 +114,45 @@
 			bme280@76 {
 				compatible = "bosch,bme280";
 				reg = <0x76>;
+				status = "okay";
 			};
 
 			pcf2129@51 {
 				compatible = "nxp,pcf2129";
 				reg = <0x51>;
+				status = "okay";
 			};
 
 			ina230@40 {
 				compatible = "ti,ina230";
 				reg = <0x40>;
 				shunt-resistor = <2000>;
+				status = "okay";
 			};
 
 			ina230@44 {
 				compatible = "ti,ina230";
 				reg = <0x44>;
 				shunt-resistor = <2000>;
+				status = "okay";
 			};
 
 			sc16is750@48 {
 				compatible = "nxp,sc16is750";
 				reg = <0x48>;
-				clocks = <&sc16is750_clock>;
-				interrupt-parent = <&intc>;
-				interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
+				clocks = <&sc16is750_clk>;
+				interrupt-parent = <&tlmm>;
+				interrupts = <3 IRQ_TYPE_LEVEL_HIGH>;
 				gpio-controller;
 				#gpio-cells = <2>;
+				status = "okay";
+
+				sc16is750_clk: sc16is750_clk {
+					compatible = "fixed-clock";
+					#clock-cells = <0>;
+					clock-frequency = <14745600>;
+					status = "okay";
+				};
 			};
 
 			pca9534@27 {
@@ -156,7 +160,8 @@
 				reg = <0x27>;
 				gpio-controller;
 				#gpio-cells = <2>;
-				gpio-line-names = "charge", "full", "power-good", "power-on";
+				gpio-line-names = "charge", "full", "power-good", "power-on", "nc", "nc", "nc", "nc";
+				status = "okay";
 			};
 		};
 	};
