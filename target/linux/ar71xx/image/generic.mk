@@ -180,7 +180,7 @@ TARGET_DEVICES += bsb
 
 define Device/carambola2
   DEVICE_TITLE := 8devices Carambola2
-  DEVICE_PACKAGES := kmod-usb-core kmod-usb2
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-i2c-gpio-custom kmod-rtc-ds1307
   BOARDNAME := CARAMBOLA2
   IMAGE_SIZE := 16000k
   CONSOLE := ttyATH0,115200
