@@ -10,6 +10,9 @@
 
 #include <asm/mach-ath79/ath79.h>
 #include <asm/mach-ath79/ar71xx_regs.h>
+#include <linux/platform_device.h>
+#include <linux/i2c.h>
+#include <linux/i2c-gpio.h>
 #include "common.h"
 #include "dev-eth.h"
 #include "dev-gpio-buttons.h"
@@ -23,6 +26,9 @@
 #define CARAMBOLA2_GPIO_LED_WLAN		0
 #define CARAMBOLA2_GPIO_LED_ETH0		14
 #define CARAMBOLA2_GPIO_LED_ETH1		13
+
+#define CARAMBOLA2_GPIO_I2C_SCL		18
+#define CARAMBOLA2_GPIO_I2C_SDA		19
 
 #define CARAMBOLA2_GPIO_BTN_JUMPSTART		11
 
@@ -61,6 +67,25 @@ static struct gpio_keys_button carambola2_gpio_keys[] __initdata = {
 	},
 };
 
+static struct i2c_gpio_platform_data carambola2_i2c_gpio_data = {
+	.sda_pin	= CARAMBOLA2_GPIO_I2C_SDA,
+	.scl_pin	= CARAMBOLA2_GPIO_I2C_SCL,
+};
+
+static struct platform_device carambola2_i2c_gpio_device = {
+	.name		= "i2c-gpio",
+	.id		= 0,
+	.dev = {
+		.platform_data  = &carambola2_i2c_gpio_data,
+	}
+};
+
+static struct i2c_board_info rtc_i2c_info[] __initdata = {
+	{
+		I2C_BOARD_INFO("ds1307", 0x68),
+	}
+};
+
 static void __init carambola2_common_setup(void)
 {
 	u8 *art = (u8 *) KSEG1ADDR(0x1fff0000);
@@ -86,6 +111,9 @@ static void __init carambola2_common_setup(void)
 static void __init carambola2_setup(void)
 {
 	carambola2_common_setup();
+
+	platform_device_register(&carambola2_i2c_gpio_device);
+	i2c_register_board_info(0, rtc_i2c_info, ARRAY_SIZE(rtc_i2c_info));
 
 	ath79_gpio_function_disable(AR724X_GPIO_FUNC_ETH_SWITCH_LED0_EN |
 				AR724X_GPIO_FUNC_ETH_SWITCH_LED1_EN |
