@@ -25,8 +25,8 @@ Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
  	};
  
  	cpus {
-@@ -617,6 +619,64 @@
- 			status = "disabled";
+@@ -698,6 +700,64 @@
+ 			reg = <0x1953000 0x1000>;
  		};
  
 +		edma@c080000 {

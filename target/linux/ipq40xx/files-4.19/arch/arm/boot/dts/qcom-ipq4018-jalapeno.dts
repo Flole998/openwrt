@@ -24,18 +24,12 @@
 	model = "8devices Jalapeno";
 	compatible = "8dev,jalapeno";
 
+	aliases {
+		ethernet0 = &gmac;
+	};
+
 	soc {
 		rng@22000 {
-			status = "okay";
-		};
-
-		mdio@90000 {
-			status = "okay";
-			pinctrl-0 = <&mdio_pins>;
-			pinctrl-names = "default";
-		};
-
-		ess-psgmii@98000 {
 			status = "okay";
 		};
 
@@ -58,12 +52,6 @@
 			status = "okay";
 		};
 
-		ess_tcsr@1953000 {
-			compatible = "qcom,tcsr";
-			reg = <0x1953000 0x1000>;
-			qcom,ess-interface-select = <TCSR_ESS_PSGMII>;
-		};
-
 		tcsr@1957000 {
 			compatible = "qcom,tcsr";
 			reg = <0x1957000 0x100>;
@@ -83,15 +71,6 @@
 		};
 
 		watchdog@b017000 {
-			status = "okay";
-		};
-
-		ess-switch@c000000 {
-			status = "okay";
-			switch_lan_bmp = <0x10>; /* lan port bitmap */
-		};
-
-		edma@c080000 {
 			status = "okay";
 		};
 	};
@@ -229,19 +208,32 @@
 	status = "okay";
 };
 
-&gmac0 {
-	qcom,poll_required = <1>;
-	qcom,poll_required_dynamic = <1>;
-	qcom,phy_mdio_addr = <3>;
-	vlan_tag = <1 0x10>;
+&mdio {
+	status = "okay";
+	pinctrl-0 = <&mdio_pins>;
+	pinctrl-names = "default";
 };
 
-&gmac1 {
-	qcom,poll_required = <1>;
-	qcom,poll_required_dynamic = <1>;
-	qcom,phy_mdio_addr = <4>;
-	vlan_tag = <2 0x20>;
+&psgmii_phy {
+	status = "okay";
 };
+
+&ess {
+	status = "okay";
+};
+
+&gmac {
+	status = "okay";
+};
+
+&essport3 {
+	label = "lan";
+};
+
+&essport4 {
+	label = "wan";
+};
+
 
 &wifi0 {
 	status = "okay";
