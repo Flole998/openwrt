@@ -22,7 +22,7 @@
 
 / {
 	model = "Crisis Innovation Lab MeshPoint One";
-	compatible = "cilab,meshpoint-one", "qcom,ipq4019";
+	compatible = "cilab,meshpoint-one";
 
 	soc {
 		rng@22000 {
@@ -137,24 +137,6 @@
 				status = "okay";
 			};
 
-			sc16is750@48 {
-				compatible = "nxp,sc16is750";
-				reg = <0x48>;
-				clocks = <&sc16is750_clk>;
-				interrupt-parent = <&tlmm>;
-				interrupts = <3 IRQ_TYPE_LEVEL_HIGH>;
-				gpio-controller;
-				#gpio-cells = <2>;
-				status = "okay";
-
-				sc16is750_clk: sc16is750_clk {
-					compatible = "fixed-clock";
-					#clock-cells = <0>;
-					clock-frequency = <14745600>;
-					status = "okay";
-				};
-			};
-
 			pca9534@27 {
 				compatible = "nxp,pca9534";
 				reg = <0x27>;
@@ -176,7 +158,7 @@
 		};
 	};
 
-	/*gpio-export {
+	gpio-export {
 		compatible = "gpio-export";
 
 		gpio_poe_out {
@@ -184,7 +166,7 @@
 			gpio-export,output = <1>;
 			gpios = <&tlmm 1 GPIO_ACTIVE_LOW>;
 		};
-	};*/
+	};
 };
 
 &tlmm {
