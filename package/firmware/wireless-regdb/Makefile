@@ -1,11 +1,11 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=wireless-regdb
-PKG_VERSION:=2018-10-24
+PKG_VERSION:=2019-03-01
 
 PKG_SOURCE:=$(PKG_NAME)-master-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git/snapshot/
-PKG_HASH:=6737a742cbd4c9740171a537faff0b3ec2813632d74efb09bccfe39e605d7fb6
+PKG_HASH:=c5b31d8bd9771119d585bb5566f1482a43f8cbfa1aeb8ce0b30b7607fcf2e19d
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-master-$(PKG_VERSION)
 
