@@ -76,6 +76,7 @@ ath79_setup_interfaces()
 	glinet,gl-ar300m-nand|\
 	glinet,gl-ar300m-nor|\
 	glinet,gl-x750|\
+	tplink,cpe210-v1|\
 	tplink,tl-wr810n-v1|\
 	tplink,tl-wr810n-v2|\
 	ubnt,routerstation|\

@@ -109,6 +109,21 @@ define Device/tplink_archer-c7-v5
 endef
 TARGET_DEVICES += tplink_archer-c7-v5
 
+define Device/tplink_cpe210-v1
+  ATH_SOC := ar9344
+  IMAGE_SIZE := 7680k
+  DEVICE_TITLE := TP-Link CPE210 v1
+  TPLINK_BOARD_ID := CPE210
+  DEVICE_PACKAGES := rssileds
+  LOADER_TYPE := elf
+  KERNEL := kernel-bin | append-dtb | lzma | loader-kernel
+  IMAGES := sysupgrade.bin factory.bin
+  IMAGE/sysupgrade.bin := append-rootfs | tplink-safeloader sysupgrade
+  IMAGE/factory.bin := append-rootfs | tplink-safeloader factory
+  SUPPORTED_DEVICES += cpe210-220-v1
+endef
+TARGET_DEVICES += tplink_cpe210-v1
+
 define Device/tplink_cpe210-v2
   $(Device/tplink-safeloader)
   ATH_SOC := qca9533
