@@ -60,6 +60,22 @@ define Build/SenaoFW
 	@cp $@.new $@
 endef
 
+define Build/NetgearMetadata
+	$(eval product=$(word 1,$(1)))
+	$(eval factory_image=$(word 2,$(1)))
+	mkdir -p $@.netgear
+
+	echo -n "$(product)" > $@.netgear/metadata.txt
+	echo -n "$(product)_V9.9.9.9" > $@.netgear/version
+	$(CP) $(KDIR)/tmp/$(factory_image) $@.netgear/wac5xx-ubifs-root.img
+	md5sum $@.netgear/wac5xx-ubifs-root.img > $@.netgear/wac5xx-ubifs-root.md5sum
+
+	$(TAR) -C $@.netgear -czvf $@ \
+		$(if $(SOURCE_DATE_EPOCH),--mtime="@$(SOURCE_DATE_EPOCH)") .
+
+	rm -rf $@.netgear
+endef
+
 define Device/8dev_jalapeno
 	$(call Device/FitImage)
 	$(call Device/UbiFit)
@@ -313,6 +329,22 @@ define Device/netgear_ex6150v2
 	DEVICE_DTS := qcom-ipq4018-ex6150v2
 endef
 TARGET_DEVICES += netgear_ex6150v2
+
+define Device/netgear_wac510
+	$(call Device/FitImage)
+	$(call Device/UbiFit)
+	DEVICE_DTS := qcom-ipq4019-wac510
+	DEVICE_DTS_CONFIG := config@5
+	BLOCKSIZE := 128k
+	PAGESIZE := 2048
+	DEVICE_VENDOR := Netgear
+	DEVICE_MODEL := WAC510
+	FACTORY_IMAGE := $$(IMAGE_PREFIX)-squashfs-factory.tar
+	IMAGES = nand-sysupgrade.bin factory.tar
+	IMAGE/factory.tar := append-ubi | NetgearMetadata WAC510 $$(FACTORY_IMAGE)
+	DEVICE_PACKAGES := uboot-envtools
+endef
+TARGET_DEVICES += netgear_wac510
 
 define Device/openmesh_a42
 	$(call Device/FitImageLzma)

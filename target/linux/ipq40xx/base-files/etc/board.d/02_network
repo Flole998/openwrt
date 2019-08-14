@@ -14,7 +14,8 @@ ipq40xx_setup_interfaces()
 	case "$board" in
 	8dev,jalapeno|\
 	alfa-network,ap120c-ac|\
-	engenius,ens620ext)
+	engenius,ens620ext|\
+	netgear,wac510)
 		ucidef_set_interfaces_lan_wan "eth0" "eth1"
 		;;
 	asus,map-ac2200|\
