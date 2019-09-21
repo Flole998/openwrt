@@ -172,6 +172,7 @@ ath79_setup_interfaces()
 	iodata,wn-ac1600dgr|\
 	iodata,wn-ac1600dgr2|\
 	iodata,wn-ag300dgr|\
+	ubnt,toughswitch-5-poe|\
 	pcs,cr5000|\
 	wd,mynet-n750)
 		ucidef_add_switch "switch0" \

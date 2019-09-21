@@ -81,6 +81,13 @@ define Device/ubnt-xw
   ATH_SOC := ar9342
 endef
 
+define Device/ubnt-sw
+  $(Device/ubnt)
+  UBNT_TYPE := SW
+  UBNT_CHIP := ar7240
+  ATH_SOC := ar7242
+endef
+
 define Device/ubnt_airrouter
   $(Device/ubnt-xm)
   DEVICE_MODEL := AirRouter
@@ -246,3 +253,12 @@ define Device/ubnt_acb-isp
   IMAGES := sysupgrade.bin
 endef
 TARGET_DEVICES += ubnt_acb-isp
+
+define Device/ubnt_toughswitch-5-poe
+  $(Device/ubnt-sw)
+  DEVICE_VENDOR := Ubiquiti
+  DEVICE_MODEL := Toughswitch 5 POE
+  DEVICE_PACKAGES := -wpad-mini -kmod-ath9k
+  SUPPORTED_DEVICES += ubnt,toughswitch-5-poe toughswitch-5-poe
+endef
+TARGET_DEVICES += ubnt_toughswitch-5-poe
