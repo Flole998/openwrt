@@ -27,6 +27,7 @@
  *  Copyright (C) 2017-2018 Thibaut VARENE <varenet@parisc-linux.org>
  *  Copyright (C) 2016 David Hutchison <dhutchison@bluemesh.net>
  *  Copyright (C) 2017 Ryan Mounce <ryan@mounce.com.au>
+ *  Copyright (C) 2019 Robert marko <robimarko@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it
  *  under the terms of the GNU General Public License version 2 as published
@@ -41,6 +42,7 @@
 
 #include <linux/spi/spi.h>
 #include <linux/spi/74x164.h>
+#include <linux/spi/ads7846.h>
 
 #include <linux/mtd/mtd.h>
 #include <linux/mtd/partitions.h>
@@ -76,6 +78,7 @@
 #define RBSPI_HAS_POE		BIT(5)
 #define RBSPI_HAS_MDIO1		BIT(6)
 #define RBSPI_HAS_PCI		BIT(7)
+#define RBSPI_HAS_ZT2046	BIT(8) /* has ZT2046Q IC for voltage and temperature */
 
 #define RB_ROUTERBOOT_OFFSET    0x0000
 #define RB_BIOS_SIZE            0x1000
@@ -387,6 +390,7 @@ static struct gpio_led rbcap_leds[] __initdata = {
 #define RBMAP_SSR_BIT_LED_APCAP	6
 #define RBMAP_GPIO_BTN_RESET	16
 #define RBMAP_GPIO_SSR_CS	11
+#define RBMAP_GPIO_ZT2046_CS	8
 #define RBMAP_GPIO_LED_POWER	4
 #define RBMAP_GPIO_POE_POWER	14
 #define RBMAP_GPIO_POE_STATUS	12
@@ -641,9 +645,15 @@ static struct gen_74x164_chip_platform_data rbspi_ssr_data = {
 	.num_registers = 1,
 };
 
+static struct ads7846_platform_data rbspi_zt2046_data = {
+	.model = 7846,
+	.vref_mv = 0,
+};
+
 /* the spi-ath79 driver can only natively handle CS0. Other CS are bit-banged */
 static int rbspi_spi_cs_gpios[] = {
 	-ENOENT,	/* CS0 is always -ENOENT: natively handled */
+	-ENOENT,	/* CS1 can be updated by the code as necessary */
 	-ENOENT,	/* CS1 can be updated by the code as necessary */
 };
 
@@ -669,6 +679,13 @@ static struct spi_board_info rbspi_spi_info[] = {
 		.max_speed_hz	= 25000000,
 		.modalias	= "74x164",
 		.platform_data	= &rbspi_ssr_data,
+	}, {
+		.bus_num	= 0,
+		.chip_select	= 2,
+		.max_speed_hz	= 2000000,
+		.modalias	= "ads7846",
+		.irq	= ATH79_MISC_IRQ(22),
+		.platform_data	= &rbspi_zt2046_data,
 	}
 };
 
@@ -727,12 +744,13 @@ static __init const struct rb_info *rbspi_platform_setup(void)
  */
 static void __init rbspi_peripherals_setup(u32 flags)
 {
-	unsigned spi_n;
+	unsigned spi_n = 1;
 
 	if (flags & RBSPI_HAS_SSR)
-		spi_n = ARRAY_SIZE(rbspi_spi_info);
-	else
-		spi_n = 1;     /* only one device on bus0 */
+		spi_n = 2;
+
+	if (flags & RBSPI_HAS_ZT2046)
+		spi_n = 3;
 
 	rbspi_ath79_spi_data.num_chipselect = spi_n;
 	rbspi_ath79_spi_data.cs_gpios = rbspi_spi_cs_gpios;
@@ -1073,12 +1091,13 @@ static void __init rbcap_setup(void)
 static void __init rbmap_setup(void)
 {
 	u32 flags = RBSPI_HAS_USB | RBSPI_HAS_WLAN0 |
-			RBSPI_HAS_SSR | RBSPI_HAS_POE;
+			RBSPI_HAS_SSR | RBSPI_HAS_POE | RBSPI_HAS_ZT2046;
 
 	if (!rbspi_platform_setup())
 		return;
 
 	rbspi_spi_cs_gpios[1] = RBMAP_GPIO_SSR_CS;
+	rbspi_spi_cs_gpios[2] = RBMAP_GPIO_ZT2046_CS;
 	rbspi_peripherals_setup(flags);
 
 	/* GMAC1 is HW MAC, WLAN0 MAC is HW MAC + 2 */
