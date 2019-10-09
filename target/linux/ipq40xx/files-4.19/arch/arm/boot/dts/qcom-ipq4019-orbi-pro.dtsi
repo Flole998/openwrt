@@ -7,7 +7,7 @@
 
 / {
 	chosen {
-		bootargs = "root=/dev/mmcblk0p25 rootfstype=squashfs,ext4 rootwait clk_ignore_unused";
+		bootargs = "root=/dev/mmcblk0p20 rootfstype=squashfs,ext4 rootwait clk_ignore_unused";
 	};
 
 	aliases {

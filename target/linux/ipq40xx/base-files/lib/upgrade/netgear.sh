@@ -88,11 +88,11 @@ netgear_do_upgrade() {
 				kernel="/dev/mmcblk0p19"
 				rootfs="/dev/mmcblk0p20"
 			;;
-			"/dev/mmcblk0p25")
+			"/dev/mmcblk0p24")
 				# booted from the alternative partition set
 				# write to the primary set
-				kernel="/dev/mmcblk0p24"
-				rootfs="/dev/mmcblk0p25"
+				kernel="/dev/mmcblk0p23"
+				rootfs="/dev/mmcblk0p24"
 			;;
 			*)
 				return 1
